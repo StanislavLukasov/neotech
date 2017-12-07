@@ -78,8 +78,7 @@ export default class App extends Component {
      */
     componentDidUpdate(prevState) {
         if(this.state.disabled) {
-            // compare 
-            //this.checkBetResults()
+            this.checkBetResults()
         }
     }
     
