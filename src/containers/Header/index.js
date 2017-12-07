@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import App from './app'
+import Header from './header'
 
 const mapStateToProps = state => ({ state })
 const mapDispatchToProps = dispatch => ({ dispatch })
@@ -9,9 +9,8 @@ const mergeProps = ({ state }, { dispatch }, ownProps) => {
 
     return Object.assign({}, ownProps, {
         breakpoint: breakpoint.breakpoint,
-        availableFunds: funds.availableFunds,
-        dispatch
+        availableFunds: funds.availableFunds
     })
 }
 
-export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(App)
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(Header)
