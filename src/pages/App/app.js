@@ -79,7 +79,7 @@ export default class App extends Component {
     componentDidUpdate(prevState) {
         if(this.state.disabled) {
             // compare 
-            this.checkBetResults()
+            //this.checkBetResults()
         }
     }
     
@@ -650,7 +650,9 @@ export default class App extends Component {
                             </div>
                         </div>
                 
-                        <p style={this.styles.form.paragraph}>After a change in exchange rate, the price for bitcoin will go:</p>
+                        <p style={this.styles.form.paragraph}>
+                            After a change in exchange rate, the price for bitcoin will go:
+                        </p>
                         
                         <div style={Object.assign({},
                             !isBreakpointSmall(this.props.breakpoint) && this.styles.form.container)}>
@@ -662,22 +664,27 @@ export default class App extends Component {
                                 <div style={this.styles.form.radioContainer}>
                                     <input 
                                         type="radio" 
+                                        id="radioButtonUp"
                                         name="direction" 
                                         value="up"
+                                        className="radiobutton" 
                                         onChange={this.handleDirectionChange.bind(this)} 
-                                        style={this.styles.form.radio}
                                         disabled={this.state.disabled ? true : false}
                                     />
-                                
-                                    <div style={this.styles.form.iconContainer}>
-                                        <img 
-                                            src="/images/up.svg" 
-                                            alt="up" 
-                                            style={this.styles.form.icon} 
-                                        />
+                                    
+                                    <label 
+                                        htmlFor="radioButtonUp" 
+                                        className="radiolabel"
+                                        style={this.styles.form.label}>
                                         
-                                        <span style={this.styles.form.span}>Up</span>
-                                    </div>
+                                        Up
+                                        
+                                        <img 
+                                            src={this.state.direction == 'up' ? '/images/graph-up-white.svg' : '/images/graph-up-grey.svg'} 
+                                            alt="Down" 
+                                            style={this.styles.form.icon}
+                                        />
+                                    </label>
                                 </div>
                             </div>
                             
@@ -686,50 +693,37 @@ export default class App extends Component {
                                 isBreakpointSmall(this.props.breakpoint) && this.styles.form.columnSmall)}>
                                 
                                 <div style={this.styles.form.radioContainer}>
+
                                     <input 
                                         type="radio" 
+                                        id="radioButtonDown"
                                         name="direction" 
                                         value="down"
+                                        className="radiobutton" 
                                         onChange={this.handleDirectionChange.bind(this)} 
-                                        style={this.styles.form.radio}
                                         disabled={this.state.disabled ? true : false}
                                     />
-                                
-                                    <div style={this.styles.form.iconContainer}>
-                                        <img 
-                                            src="/images/down.svg" 
-                                            alt="down" 
-                                            style={this.styles.form.icon} 
-                                        />
+                                    
+                                    <label 
+                                        htmlFor="radioButtonDown" 
+                                        className="radiolabel"
+                                        style={this.styles.form.label}>
                                         
-                                        <span style={this.styles.form.span}>Down</span>
-                                    </div>
+                                        Down
+                                        
+                                        <img 
+                                            src={this.state.direction == 'down' ? '/images/graph-down-white.svg' : '/images/graph-down-grey.svg'}
+                                            alt="Down" 
+                                            style={this.styles.form.icon}
+                                        />
+                                    </label>
                                 </div>
                             </div>
                         </div>
                         
-                        
-                        <div style={this.styles.form.checkboxContainer}>
-                            <input 
-                                type="checkbox"
-                                value={this.state.agreed}
-                                style={this.styles.form.checkbox}
-                                onChange={this.handleAgreedChange.bind(this)} 
-                                name="agreed"
-                                disabled={this.state.disabled ? true : false}
-                            />
-                            
-                            <Title
-                                title="I have read terms and conditions"
-                                color="#666666"
-                                fontSize="0.85rem"
-                                fontWeight="400"
-                                margin="0"
-                                tag="label"
-                                display="block"
-                                margin="0 0 0 0.5rem"
-                            />
-                        </div>
+                        {!isBreakpointSmall(this.props.breakpoint) &&
+                            this.renderCheckbox()
+                        }
                     </form>
                 </div>
                 
@@ -742,7 +736,7 @@ export default class App extends Component {
                         color="#0667D0"
                         fontSize="1rem"
                         fontWeight="400"
-                        margin="0 0 1.5rem 0"
+                        margin={isBreakpointSmall(this.props.breakpoint) ? "2rem 0 1.5rem 0" : "0 0 1.5rem 0"}
                     />  
                     
                     <div style={this.styles.rates.container}>
@@ -800,7 +794,42 @@ export default class App extends Component {
                             </span>
                         </div>
                     }
+                    
+                    {isBreakpointSmall(this.props.breakpoint) &&
+                        this.renderCheckbox()
+                    }
                 </div>
+            </div>
+        )
+    }
+    
+    /**
+     * Renders checkbox
+     *
+     * @return DOM elements
+     */
+    renderCheckbox() {
+        return (
+            <div style={this.styles.form.checkboxContainer}>
+                <input 
+                    type="checkbox"
+                    checked={this.state.agreed}
+                    style={this.styles.form.checkbox}
+                    onChange={this.handleAgreedChange.bind(this)} 
+                    name="agreed"
+                    disabled={this.state.disabled ? true : false}
+                />
+                
+                <Title
+                    title="I have read terms and conditions"
+                    color="#666666"
+                    fontSize="0.85rem"
+                    fontWeight="400"
+                    margin="0"
+                    tag="label"
+                    display="block"
+                    margin="0 0 0 0.5rem"
+                />
             </div>
         )
     }
@@ -833,7 +862,11 @@ export default class App extends Component {
                 
                 <div style={this.styles.results.text}>
                     <p>{paragraph1}</p>
-                    <p>{paragraph2} <span>{this.exchangeRate} BTC</span></p>
+                    <p>{paragraph2} <span style={Object.assign({},
+                        this.styles.results.spanColorRed,
+                        this.state.win && this.styles.results.spanColorGreen)}>
+                        {this.exchangeRate} BTC</span>
+                    </p>
                 </div>
                 
                 <button 
@@ -854,6 +887,7 @@ export default class App extends Component {
     renderSubmitButtonWithValidationErrors() {
         let image = '/images/cross-white.svg'
         let alt = 'disabled'
+        let text = 'Place bet'
         
         if(this.state.form_validated) {
             image = '/images/tick-white.svg'
@@ -862,7 +896,8 @@ export default class App extends Component {
         
         if(this.state.disabled) {
             image = '/images/loading.gif'
-            alt = 'working..'
+            alt = 'working..',
+            text = 'Bet placed'
         }
         
         return (
@@ -890,7 +925,7 @@ export default class App extends Component {
                         />
                         
                         <span style={this.styles.submitButtonWithValidation.span}>
-                            Place bet
+                            {text}
                         </span>
                     </button>
                 </div>

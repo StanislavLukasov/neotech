@@ -1,0 +1,22 @@
+label.radiolabel {
+	font-size: 1rem;
+	padding: 1rem;
+	display: inline-block;
+	cursor: pointer;
+	position: relative;
+	text-align: center;
+	background: transparent;
+	width: 100%;
+	border-radius: 0.2rem;
+	border: 0.065rem solid #DAE1E9;
+}
+
+input.radiobutton {
+	display: none; 
+}
+
+input.radiobutton:checked + label.radiolabel {
+	background-color: #0667D0;
+	border-color: #0667D0;
+	color: white;
+}

@@ -51,7 +51,7 @@ export default function styles(props) {
 			},
 			select: {
 				width: '100%',
-				padding: '0.5rem',
+				padding: '1rem 0.5rem',
 				margin: '0 0 1rem 0',
 				border: '0.065rem solid #DAE1E9',
 				color: '#666666',
@@ -69,7 +69,7 @@ export default function styles(props) {
 			},
 			input: {
 				width: '100%',
-				padding: '0.5rem',
+				padding: '1rem 0.5rem',
 				border: '0.065rem solid #DAE1E9',
 				color: '#666666',
 				outline: 'none',
@@ -79,39 +79,30 @@ export default function styles(props) {
 				borderColor: 'red'
 			},
 			paragraph: {
-				fontSize: '0.85rem',
 				color: '#666666'
-			},
-			icon: {
-				width: '1rem',
-				margin: '1rem',
-				display: 'inline-block',
-				verticalAlign: 'top'
-			},
-			span: {
-				display: 'inline-block',
-				verticalAlign: 'top'
-			},
-			radio: {
-				cursor: 'pointer'
-			},
-			iconContainer: {
-				display: 'flex',
-				alignItems: 'center',
-				justifyContent: 'center',
-				margin: 'auto'	
 			},
 			radioContainer: {
 				margin: 'auto',
 				textAlign: 'center',
-				padding: '2rem 0'
+				margin: '1rem 0'
 			},
 			checkboxContainer: {
 				display: 'flex',
-				alignItems: 'center'
+				alignItems: 'center',
+				margin: '1rem 0'
 			},
 			checkbox: {
 				cursor: 'pointer'
+			},
+			icon: {
+				display: 'inline',
+				width: '1.25rem',
+				margin: '0 0 0 0.5rem'
+			},
+			label: {
+				display: 'flex',
+				alignItems: 'center',
+				justifyContent: 'center'
 			}
 		},
 		rates: {
@@ -206,7 +197,7 @@ export default function styles(props) {
 		},
 		results: {
 			container: {
-				wdith: '100%',
+				width: '100%',
 				textAlign: 'center',
 				padding: '5rem 1.5rem'
 			},
@@ -225,6 +216,12 @@ export default function styles(props) {
 				fontSize: '0.85rem',
 				textTransform: 'capitalize',
 				padding: '1rem'
+			},
+			spanColorRed: {
+				color: '#C96150'
+			},
+			spanColorGreen: {
+				color: 'green'
 			}
 		}
 	}
