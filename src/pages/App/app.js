@@ -777,7 +777,7 @@ export default class App extends Component {
                         </ul>
                     </div>
                     
-                    {this.state.currentExchangeRate &&
+                    {this.state.currentExchangeRate > 0 &&
                         <div>
                             <span style={this.styles.rates.text}>
                                 Current exchange rate:
