@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
 import Header from '../../containers/Header'
+import HeaderMock from '../../containers/Header/header'
 import Title from '../../components/Title'
 import styles from './styles'
 import Settings from '../../components/Settings'
@@ -207,25 +208,27 @@ export default class App extends Component {
     getRates() {
         let _this = this
         
-        fetch('https://api.coindesk.com/v1/bpi/currentprice.json?t=123454', {
-            method: 'GET'
-        })
-        .then(function(response) {
-            return response.json()
-        })
-        .then(function(json) {
-            if(json.errors) {
+        if(process.env.NODE_ENV !== 'test') {
+            fetch('https://api.coindesk.com/v1/bpi/currentprice.json?t=123454', {
+                method: 'GET'
+            })
+            .then(function(response) {
+                return response.json()
+            })
+            .then(function(json) {
+                if(json.errors) {
+                    _this.setError(true)
+                    _this.setLoading(false)
+                } else {
+                    _this.setError(false)
+                    _this.setLoading(false)
+                    _this.setRates(json)
+                }
+            })
+            .catch (function(ex) {
                 _this.setError(true)
-                _this.setLoading(false)
-            } else {
-                _this.setError(false)
-                _this.setLoading(false)
-                _this.setRates(json)
-            }
-        })
-        .catch (function(ex) {
-            _this.setError(true)
-        })
+            })
+        }
     }
     
     /**
@@ -388,7 +391,6 @@ export default class App extends Component {
      */
     userHasAvailableFunds() {
         let result = false
-        
         if(this.props.availableFunds >= this.exchangeRate) {
             result = true
         }
@@ -748,7 +750,8 @@ export default class App extends Component {
                                             _this.styles.rates.li,
                                             index == _this.state.currencies.length - 1 && _this.styles.rates.liLastChild
                                         )}
-                                        key={index}>
+                                        key={index}
+                                        className="currencies">
                                         
                                         <img 
                                             src={item.icon}
@@ -915,7 +918,8 @@ export default class App extends Component {
                         this.styles.submitButtonWithValidation.button,
                         !this.state.form_validated && this.styles.submitButtonWithValidation.buttonDisabled)}
                         disabled={!this.state.form_validated ? true : false}
-                        onClick={this.handleFormSubmit.bind(this)}>
+                        onClick={this.handleFormSubmit.bind(this)}
+                        id="submit--button">
                         
                         <img 
                             src={image}
@@ -983,7 +987,7 @@ export default class App extends Component {
      * @return DOM elements
      */
     renderError() {
-        if(this.state.error || this.state.currencies.length == 0) {
+        if((this.state.error || this.state.currencies.length == 0) && !this.state.loading) {
             return (
                 <div 
                     id="error" 
@@ -1005,7 +1009,7 @@ export default class App extends Component {
      * @return DOM elements
      */
     renderLoading() {
-        if(this.state.loading) {
+        if(this.state.loading && !this.state.error) {
             return (
                 <div id="loading">
                     <img 
@@ -1019,6 +1023,18 @@ export default class App extends Component {
         
         return false
     }
+    
+    renderHeader() {
+        if(process.env.NODE_ENV == 'test') {
+            return (
+                <HeaderMock />
+            )
+        }
+        
+        return (
+            <Header />
+        )
+    }
 
     /**
      * Renders DOM elements
@@ -1028,8 +1044,7 @@ export default class App extends Component {
     render() {
         return (
             <div>
-                <Header />
-                
+                {this.renderHeader()}
                 {this.renderLoading()}
                 {this.renderError()}
                 {this.renderApp()}
