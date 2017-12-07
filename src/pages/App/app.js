@@ -378,6 +378,8 @@ export default class App extends Component {
             this.setState({
                 disabled: false,
                 amount: '',
+                direction: false,
+                agreed: false,
                 displayBetResult: true,
                 win: result
             })
