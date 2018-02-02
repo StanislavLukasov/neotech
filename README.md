@@ -1,5 +1,3 @@
-# Neotech exercise instructions
-
 ## Installation
 To install the project, simply type the following commands when you navigate to project root folder
 
